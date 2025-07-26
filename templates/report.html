@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook Report Tool</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">🚩 Report a Facebook Post/Page</h4>
+      </div>
+      <div class="card-body">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Facebook Link</label>
+            <input type="url" class="form-control" name="fb_link" placeholder="https://facebook.com/..." required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Reason for Report</label>
+            <select class="form-select" name="reason">
+              {% for reason in reasons %}
+              <option value="{{ reason }}">{{ reason }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Additional Details (optional)</label>
+            <textarea class="form-control" name="details" rows="4"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-danger">Submit Report</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
